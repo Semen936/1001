@@ -1,52 +1,83 @@
-﻿string[] arrayFirst =  {"labas", "hi", "pryvitannie", "privet", "Ey"};
-int countFirst = CountStringLessThreeChar(arrayFirst);
-string[] resultFirst =  FillResultArray(arrayFirst,countFirst);
+﻿﻿// Задача:
+// Написать программу, которая из имеющегося массива строк формирует новый массив из строк,
+// длина которых меньше, либо равна 3 символам. Первоначальный массив можно ввести с клавиатуры,
+// либо задать на старте выполнения алгоритма. При решении не рекомендуется пользоваться коллекциями,
+// лучше обойтись исключительно массивами.
+
+// Примеры:
+
+// [“Hello”, “2”, “world”, “:-)”] → [“2”, “:-)”]
+// [“1234”, “1567”, “-2”, “computer science”] → [“-2”]
+// [“Russia”, “Denmark”, “Kazan”] → []
+
+Commands();
+string[] array = new string[] {};
+
+string fromUser = ReadInput("Введите команду: ");
+switch (fromUser)
+{
+    case "1":
+        array = new string[] { "Hello", "2", "world", ":-)" };
+        break;
+    case "2":
+        array = new string[] { "1234", "1567", "-2", "computer science" };
+        break;
+    case "3":
+        array = new string[] { "Russia", "Denmark", "Kazan" };
+        break;
+    default:
+        Console.WriteLine($"{fromUser} - Такой команды нет");
+        break;
+}
 
 
-string[] arraySecond = {"333", "16", "-41", "my_sun", "abcd"};
-int countSecond  = CountStringLessThreeChar(arraySecond);
-string[] resultSecond = FillResultArray(arraySecond,countSecond);
+int lenNewArray = 0;
+for (int i = 0; i <= array.Length - 1; i++)
+{
+    if (array[i].Length <= 3) lenNewArray++;
+}
 
+string[] newArray = new string[lenNewArray];
+int idx = 0;
 
-string[] arrayThird = {"Poland", "Lithuania", "Belarus", "OAE"};
-int countThird = CountStringLessThreeChar(arrayThird);
-string[] resultThird = FillResultArray(arrayThird, countThird);
-
-void PrintArray(string[] array) 
+for (int i = 0; i <= array.Length - 1; i++)
+{
+    if (array[i].Length <= 3)
     {
-
-        for (int i = 0; i < array.Length; i++)
-            {
-                if (i != array.Length - 1) Console.Write($"{array[i]}, ");
-                else Console.Write($"{array[i]}.");
-            }
-        Console.WriteLine();
+        newArray[idx] = array[i];
+        idx++;
     }
+}
 
-int CountStringLessThreeChar(string[] array)
+PrintArray(array);
+Console.Write("→ ");
+PrintArray(newArray);
+
+// Функция: Вывод команд для работы с программой
+void Commands()
+{
+    Console.WriteLine();
+    Console.WriteLine("СПИСОК КОМАНД:");
+    Console.WriteLine("1 – использовать массив: [“Hello”, “2”, “world”, “:-)”]");
+    Console.WriteLine("2 – использовать массив: [“1234”, “1567”, “-2”, “computer science”]");
+    Console.WriteLine("3 – использовать массив: [“Russia”, “Denmark”, “Kazan”]");
+    Console.WriteLine();
+}
+
+// Функция ввода
+string ReadInput(string msg)
+{
+    Console.Write(msg);
+    return Console.ReadLine();
+}
+
+//  Функция вывода массива в терминал
+void PrintArray(string[] array)
+{
+    Console.Write("[ ");
+    for (int i = 0; i < array.Length; i++)
     {
-        int count = 0;
-        for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i].Length <= 3) count++;
-            }
-        return count;
+        Console.Write($"“{array[i]}”, ");
     }
-
-string[] FillResultArray(string[] array, int count)
-    {
-        string[] result = new string[count];
-        for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i].Length <= 3)
-                    {
-                        result[result.Length - count] = array[i];
-                        count--;
-                    }
-            }
-        return result;
-    }
-
-PrintArray(resultFirst);
-PrintArray(resultSecond);
-PrintArray(resultThird);
+    Console.Write("] ");
+}
